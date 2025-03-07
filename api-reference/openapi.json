@@ -1,195 +1,3663 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Qjumpa",
+        "version": "0.0.1",
+        "description": "# Qjumpa API Documentation Overview\n\n## Introduction\n\nThe Qjumpa API provides a comprehensive set of tools for building and managing online stores and mobile applications. It allows developers to integrate and manage products, orders, customers, payments, and other essential functionalities programmatically.\n\nThis documentation covers all the available endpoints, request\/response formats, authentication methods, and best practices for utilizing the API.\n\n## Base URL\n\nAll API requests are made to the following base URL:\n\n```\nhttps:\/\/api.qjumpa.com\/v1\/\n```\n\n## Authentication\n\nThe API uses token-based authentication to secure endpoints. Each request must include an Authorization header with a valid API token. Example:\n\n```\nAuthorization: Bearer YOUR_API_TOKEN\n```\n\n## Versioning\n\nThis API is versioned to ensure backward compatibility. The current version is `v1`, as reflected in the base URL. Future updates may introduce new versions with additional features or changes.\n\n## Resources\n\nThe Qjumpa API provides the following key resources:\n\n### 1. **Products**\n   - **Endpoints**: `\/products`, `\/products\/{id}`\n   - **Operations**: Create, Read, Update, Delete (CRUD)\n   - **Description**: Manage the product catalog, including product details, pricing, inventory, and categories.\n\n### 2. **Orders**\n   - **Endpoints**: `\/orders`, `\/orders\/{id}`\n   - **Operations**: CRUD, Status Updates, Shipping Information\n   - **Description**: Handle customer orders, including order creation, payment processing, and tracking order status.\n\n### 3. **Customers**\n   - **Endpoints**: `\/customers`, `\/customers\/{id}`\n   - **Operations**: CRUD\n   - **Description**: Manage customer accounts, including registration, login, and customer profiles.\n\n### 4. **Payments**\n   - **Endpoints**: `\/payments`, `\/payments\/{id}`\n   - **Operations**: Create, Read\n   - **Description**: Process and manage payments, including integrations with various payment gateways.\n\n### 5. **Cart**\n   - **Endpoints**: `\/cart`, `\/cart\/items`, `\/cart\/checkout`\n   - **Operations**: Add\/Remove Items, View Cart, Checkout\n   - **Description**: Handle the shopping cart, including adding\/removing products and initiating the checkout process.\n\n### 6. **Shipping**\n   - **Endpoints**: `\/shipping`, `\/shipping\/{id}`\n   - **Operations**: Get Rates, Calculate Shipping Costs, Track Shipments\n   - **Description**: Manage shipping options, calculate rates, and track shipments.\n\n### 7. **Categories**\n   - **Endpoints**: `\/categories`, `\/categories\/{id}`\n   - **Operations**: CRUD\n   - **Description**: Organize products into categories for easy navigation and filtering.\n\n### 8. **Discounts and Coupons**\n   - **Endpoints**: `\/discounts`, `\/coupons`, `\/coupons\/{id}`\n   - **Operations**: CRUD, Apply Discount\n   - **Description**: Manage promotional discounts and coupons, including application to orders.\n\n## Request and Response Format\n\nAll API requests and responses are in JSON format. The structure for requests includes standard fields such as `id`, `name`, `price`, `status`, etc. The response includes data, status codes, and messages to indicate the success or failure of the request.\n\n### Example Request\n\n```json\nPOST \/products\n{\n    'name': 'Sample Product',\n    'price': 29.99,\n    'stock': 100\n}\n```\n\n### Example Response\n\n```json\n{\n    'success': true,\n    'status_code': 200,\n    'message': 'Product created successfully.',\n    'data': {\n        'id': 123,\n        'name': 'Sample Product',\n        'price': 29.99,\n        'stock': 100\n    },\n}\n```\n\n## Error Handling\n\nThe API uses standard HTTP status codes to indicate the success or failure of requests. Common status codes include:\n\n- **200 OK**: The request was successful.\n- **201 Created**: A new resource has been created.\n- **400 Bad Request**: The request was invalid or cannot be processed.\n- **401 Unauthorized**: Authentication failed or was not provided.\n- **404 Not Found**: The requested resource does not exist.\n- **500 Internal Server Error**: An error occurred on the server.\n\nErrors are returned in JSON format with a message detailing the issue.\n\n## Rate Limiting\n\nTo ensure fair usage and prevent abuse, the API implements rate limiting. The limits are based on the number of requests per minute and vary depending on the endpoint. Exceeding these limits will result in a `429 Too Many Requests` response.\n\n\n## Conclusion\n\nFor any issues or questions, please refer to our [Support](#) page or contact our Support team at [support@qjumpa.com](mailto:support@qjumpa.com).\n\n---\n"
     },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+    "servers": [
+        {
+            "url": "https:\/\/qj-ms.test\/v1",
+            "description": "Test"
+        },
+        {
+            "url": "https:\/\/staging-api.qjumpa.com\/v1",
+            "description": "Staging"
+        },
+        {
+            "url": "https:\/\/api.qjumpa.com\/v1",
+            "description": "Prod"
         }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
+    ],
+    "security": [
+        {
+            "http": []
+        }
+    ],
+    "paths": {
+        "\/auth\/customer\/signup": {
+            "post": {
+                "operationId": "customerAuthenticate.registerEmail",
+                "summary": "Register customer email",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/CustomerEmailCreateRequest"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "email": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "email"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
             }
-          },
-          "required": true
+        },
+        "\/auth\/customer\/signup\/verify": {
+            "post": {
+                "operationId": "customerAuthenticate.register",
+                "summary": "Complete customer registration",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CustomerCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/resend-otp": {
+            "post": {
+                "operationId": "customerAuthenticate.resendCustomerEmailOTP",
+                "summary": "Resend customer email OTP",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CustomerResendEmailOtpRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/login": {
+            "post": {
+                "operationId": "customerAuthenticate.login",
+                "summary": "Login customer",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CustomerLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/google\/redirect": {
+            "get": {
+                "operationId": "customerAuthenticate.signInWithGoogle",
+                "summary": "Generate redirect url to access gmail account",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/google\/callback": {
+            "get": {
+                "operationId": "customerAuthenticate.handleGoogleCallback",
+                "summary": "Handle customer authentication with Google",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/phaun\/redirect": {
+            "get": {
+                "operationId": "customerAuthenticate.signInWithPhaun",
+                "summary": "Generate redirect url to access Phaun account",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/callback\/mobile": {
+            "get": {
+                "operationId": "customerAuthenticate.handlePhaunCallback",
+                "summary": "Handle customer authentication with Phaun",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/logout": {
+            "post": {
+                "operationId": "customerAuthenticate.logout",
+                "summary": "Handle an incoming new logout request",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/forgot-password": {
+            "post": {
+                "operationId": "customerAuthenticate.forgotPassword",
+                "summary": "Handle an incoming password reset link request",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/reset-password": {
+            "post": {
+                "operationId": "customerAuthenticate.resetPassword",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PasswordResetRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/customer\/update-password": {
+            "put": {
+                "operationId": "customerAuthenticate.updatePassword",
+                "summary": "Update the customer's password",
+                "tags": [
+                    "Customer Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PasswordUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/register": {
+            "post": {
+                "operationId": "storeAuthenticate.registerStore",
+                "summary": "Register a new store",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/StoreCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/register\/locations": {
+            "post": {
+                "operationId": "auth.storeAuthenticate.setupLocations_0",
+                "summary": "Register a new store location",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/LocationCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/register\/manager": {
+            "post": {
+                "operationId": "storeAuthenticate.registerStoreManager",
+                "summary": "Register a new store manager",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/StoreManagerCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/location\/invite": {
+            "post": {
+                "operationId": "raven.invite",
+                "summary": "Invite a user to a store location",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RavenInviteCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/auth\/store\/location\/invite\/verify": {
+            "get": {
+                "operationId": "storeAuthenticate.verifyInvitationToken",
+                "summary": "Verify invitation token",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/location\/invite\/accept": {
+            "post": {
+                "operationId": "storeAuthenticate.acceptInvite",
+                "summary": "Accept user invitation",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RavenInviteVerifyRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/login": {
+            "post": {
+                "operationId": "storeAuthenticate.login",
+                "summary": "Log store user in",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/StoreLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/logout": {
+            "post": {
+                "operationId": "storeAuthenticate.logout",
+                "summary": "Log store user out",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/forgot-password": {
+            "post": {
+                "operationId": "storeAuthenticate.forgotPassword",
+                "summary": "Send password reset link",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/reset-password": {
+            "post": {
+                "operationId": "storeAuthenticate.resetPassword",
+                "summary": "Reset password",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/PasswordResetRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/stores\/stores\/{store}\/locations": {
+            "post": {
+                "operationId": "store.location.create",
+                "summary": "Register a new store location",
+                "tags": [
+                    "Raven\/Admin\/Manager Authentication"
+                ],
+                "parameters": [
+                    {
+                        "name": "store",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/LocationCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/carts": {
+            "get": {
+                "operationId": "cart.index",
+                "summary": "Get the customer's cart information",
+                "tags": [
+                    "Cart"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "cart.add",
+                "summary": "Add an item to the cart",
+                "tags": [
+                    "Cart"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CartCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "cart.update",
+                "summary": "Update an item in the cart",
+                "tags": [
+                    "Cart"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CartUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "cart.delete",
+                "summary": "Delete cart",
+                "tags": [
+                    "Cart"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/carts\/cart-item": {
+            "delete": {
+                "operationId": "cart.remove",
+                "summary": "Remove an item from the cart",
+                "tags": [
+                    "Cart"
+                ],
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/checkout\/initiate": {
+            "post": {
+                "operationId": "checkout.initiate",
+                "summary": "Initiate a checkout",
+                "tags": [
+                    "Checkout"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/InitiateCheckoutRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/checkout\/complete": {
+            "post": {
+                "operationId": "checkout.complete",
+                "summary": "Complete a checkout",
+                "tags": [
+                    "Checkout"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CheckoutRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/checkout\/resend-otp": {
+            "post": {
+                "operationId": "resend-otp",
+                "summary": "Resend OTP",
+                "tags": [
+                    "Checkout"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/OtpResetRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/customers": {
+            "get": {
+                "operationId": "customers",
+                "summary": "Get all customers",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/customers\/{customerId}": {
+            "get": {
+                "operationId": "customers.customer",
+                "summary": "Get a customer",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/customer\/wallet": {
+            "get": {
+                "operationId": "customer.wallet",
+                "summary": "Get customer wallet",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/customer\/orders": {
+            "get": {
+                "operationId": "customer.orders",
+                "summary": "Get all orders",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/customer\/order\/{orderNo}": {
+            "get": {
+                "operationId": "customer.order",
+                "summary": "Get an order",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "orderNo",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/customer\/profile": {
+            "get": {
+                "operationId": "customer.index",
+                "summary": "Get a customer",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "customer.update",
+                "summary": "Update a customer",
+                "tags": [
+                    "Customer"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/CustomerProfileUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "customer.delete",
+                "summary": "Delete a customer",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/stores\/customers": {
+            "get": {
+                "operationId": "store.customers",
+                "summary": "Get all customers",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/stores\/customers\/{customerId}": {
+            "get": {
+                "operationId": "store.customers.customer",
+                "summary": "Get a customer",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/subscribe": {
+            "post": {
+                "operationId": "landing.emailSubscriber",
+                "tags": [
+                    "EmailSubscriber"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/EmailSubscriberCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/email\/verification-notification": {
+            "post": {
+                "operationId": "verification.send",
+                "summary": "Send a new email verification notification",
+                "tags": [
+                    "EmailVerificationNotification"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/customer\/favorites": {
+            "get": {
+                "operationId": "customer.favorite.index",
+                "summary": "Get all favorites",
+                "tags": [
+                    "Favorite"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "customer.favorite.create",
+                "summary": "Add to favorites",
+                "tags": [
+                    "Favorite"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/FavoriteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "customer.favorite.delete",
+                "summary": "Remove from favorites",
+                "tags": [
+                    "Favorite"
+                ],
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/locations\/{locationId}": {
+            "get": {
+                "operationId": "location.location",
+                "summary": "List a location",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/products": {
+            "get": {
+                "operationId": "location.products",
+                "summary": "List all products of a location",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "post": {
+                "operationId": "location.product.create",
+                "summary": "Create a product",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/LocationProductCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/products\/{productId}": {
+            "get": {
+                "operationId": "location.product",
+                "summary": "List a product",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "put": {
+                "operationId": "location.product.delete",
+                "summary": "Delete a product",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/products\/import": {
+            "post": {
+                "operationId": "location.product.import",
+                "summary": "Import products",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/LocationProductImportRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/verify-otp": {
+            "post": {
+                "operationId": "location.verify-otp",
+                "summary": "Verify order OTP",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/OtpVerificationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/orders": {
+            "get": {
+                "operationId": "location.orders",
+                "summary": "List all orders of a location",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/orders\/pickup": {
+            "get": {
+                "operationId": "location.orders.pickup",
+                "summary": "List all pickup orders of a location",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/locations\/{locationId}\/orders\/pickup\/{orderNo}": {
+            "put": {
+                "operationId": "location.orders.pickup.update",
+                "summary": "Update a pickup order",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderNo",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/OrderUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/stores\/{storeId}\/locations": {
+            "get": {
+                "operationId": "locations",
+                "summary": "List all locations of a store",
+                "tags": [
+                    "Location"
+                ],
+                "parameters": [
+                    {
+                        "name": "storeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/contact": {
+            "post": {
+                "operationId": "landing.message",
+                "tags": [
+                    "Message"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/MessageCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/banks": {
+            "get": {
+                "operationId": "paystack.listBanks",
+                "summary": "List all banks",
+                "tags": [
+                    "Paystack"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/verify-account": {
+            "post": {
+                "operationId": "paystack.verifyAccount",
+                "summary": "Verify bank account number",
+                "tags": [
+                    "Paystack"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/BankAccountNumberVerificationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/products": {
+            "post": {
+                "operationId": "products.create",
+                "summary": "Create a product",
+                "tags": [
+                    "Product"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ProductCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            },
+            "get": {
+                "operationId": "products.list-all",
+                "summary": "List all products",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/products\/store": {
+            "get": {
+                "operationId": "products.list-all-with-store",
+                "summary": "List all products with store",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/products\/{productId}": {
+            "get": {
+                "operationId": "products.list",
+                "summary": "List a product",
+                "tags": [
+                    "Product"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "put": {
+                "operationId": "products.update",
+                "summary": "Update a product",
+                "tags": [
+                    "Product"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ProductUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            },
+            "delete": {
+                "operationId": "products.delete",
+                "summary": "Delete a product",
+                "tags": [
+                    "Product"
+                ],
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/customer\/shopping-lists": {
+            "get": {
+                "operationId": "customer.shopping-list.index",
+                "summary": "Get the customer's shopping list",
+                "tags": [
+                    "ShoppingList"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "customer.shopping-list.create",
+                "summary": "Add an item to the shopping list",
+                "tags": [
+                    "ShoppingList"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ShoppingListRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "customer.shopping-list.delete",
+                "summary": "Remove an item from the shopping list",
+                "tags": [
+                    "ShoppingList"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/stores": {
+            "post": {
+                "operationId": "store.create",
+                "summary": "Create a store",
+                "tags": [
+                    "Store"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/StoreCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            },
+            "get": {
+                "operationId": "stores",
+                "summary": "List all stores",
+                "tags": [
+                    "Store"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/stores\/{storeId}": {
+            "put": {
+                "operationId": "store.update",
+                "summary": "Update a store",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "storeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/StoreUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            },
+            "delete": {
+                "operationId": "store.delete",
+                "summary": "Delete a store",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "storeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "get": {
+                "operationId": "store.store",
+                "summary": "List a store",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "storeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/ravens\/all": {
+            "get": {
+                "operationId": "ravens.all",
+                "summary": "List all store users",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/ravens\/{ravenId}": {
+            "get": {
+                "operationId": "ravens.single",
+                "summary": "List a store user",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "ravenId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/ravens\/{userId}": {
+            "put": {
+                "operationId": "ravens.update",
+                "summary": "Update a store user",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RavenUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "ravens.delete",
+                "summary": "Delete a store user",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/ravens\/invite\/{inviteId}": {
+            "delete": {
+                "operationId": "ravens.delete.raven.invited",
+                "summary": "Delete invited store user",
+                "tags": [
+                    "Store"
+                ],
+                "parameters": [
+                    {
+                        "name": "inviteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/ravens\/check-with-store": {
+            "post": {
+                "operationId": "ravens.check-with-store",
+                "summary": "Check raven with store",
+                "tags": [
+                    "Store"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/RavenStoreCheckRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/subscription-plans": {
+            "get": {
+                "operationId": "subscription.list",
+                "summary": "Get all subscription plans",
+                "tags": [
+                    "Subscription"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/stores\/{storeId}\/subscribe\/{planId}": {
+            "post": {
+                "operationId": "subscription.subscribe",
+                "summary": "Subscribe a store",
+                "tags": [
+                    "Subscription"
+                ],
+                "parameters": [
+                    {
+                        "name": "storeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "planId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/auth\/store\/verify-email\/{id}\/{hash}": {
+            "get": {
+                "operationId": "verification.verify",
+                "summary": "Mark the authenticated user's email address as verified",
+                "tags": [
+                    "VerifyEmail"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "\/webhook\/paystack": {
+            "post": {
+                "operationId": "webhook.paystack",
+                "tags": [
+                    "Webhook"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "http": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "BankAccountNumberVerificationRequest": {
+                "type": "object",
+                "properties": {
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "bank_code",
+                    "account_number"
+                ],
+                "title": "BankAccountNumberVerificationRequest"
+            },
+            "CartCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "integer"
+                    },
+                    "quantity": {
+                        "type": "string"
+                    },
+                    "location_id": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "product_id",
+                    "quantity",
+                    "location_id"
+                ],
+                "title": "CartCreateRequest"
+            },
+            "CartUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "integer"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "required": [
+                    "product_id",
+                    "quantity"
+                ],
+                "title": "CartUpdateRequest"
+            },
+            "CheckoutRequest": {
+                "type": "object",
+                "properties": {
+                    "order_type": {
+                        "type": "string",
+                        "description": "'payment_method' => 'required|string|in:' . implode(',', Enums\\PaymentMethod::toArray()),",
+                        "enum": [
+                            "delivery",
+                            "pickup",
+                            "in-store"
+                        ]
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "order_type",
+                    "reference"
+                ],
+                "title": "CheckoutRequest"
+            },
+            "CustomerCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "otp": {
+                        "type": "string"
+                    },
+                    "google_id": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "username",
+                    "password",
+                    "otp",
+                    "password_confirmation"
+                ],
+                "title": "CustomerCreateRequest"
+            },
+            "CustomerEmailCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email"
+                ],
+                "title": "CustomerEmailCreateRequest"
+            },
+            "CustomerLoginRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "title": "CustomerLoginRequest"
+            },
+            "CustomerProfileUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "title": "CustomerProfileUpdateRequest"
+            },
+            "CustomerResendEmailOtpRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "required": [
+                    "email"
+                ],
+                "title": "CustomerResendEmailOtpRequest"
+            },
+            "EmailSubscriberCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "required": [
+                    "email"
+                ],
+                "title": "EmailSubscriberCreateRequest"
+            },
+            "FavoriteRequest": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "product_id"
+                ],
+                "title": "FavoriteRequest"
+            },
+            "InitiateCheckoutRequest": {
+                "type": "object",
+                "properties": {
+                    "order_type": {
+                        "type": "string",
+                        "description": "'payment_method' => 'required|string|in:' . implode(',', Enums\\PaymentMethod::toArray()),",
+                        "enum": [
+                            "delivery",
+                            "pickup",
+                            "in-store"
+                        ]
+                    },
+                    "instructions": {
+                        "type": "string",
+                        "enum": [
+                            "If some items aren't available please cancel the order",
+                            "If the order is ready for pickup please notify me",
+                            "If some items aren't available please replace them with similar items",
+                            "If some items aren't available please remove them from the order",
+                            "If some items aren't available please continue with the order"
+                        ]
+                    }
+                },
+                "required": [
+                    "order_type"
+                ],
+                "title": "InitiateCheckoutRequest"
+            },
+            "LocationCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "store_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "type": "number"
+                    },
+                    "opening_time": {
+                        "type": "string"
+                    },
+                    "closing_time": {
+                        "type": "string"
+                    },
+                    "timezone": {
+                        "type": "string"
+                    },
+                    "settlement_bank": {
+                        "type": "string"
+                    },
+                    "settlement_account_number": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "store_id",
+                    "name",
+                    "settlement_bank",
+                    "settlement_account_number"
+                ],
+                "title": "LocationCreateRequest"
+            },
+            "LocationProductCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "photo_url": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                },
+                "required": [
+                    "name",
+                    "sku",
+                    "price",
+                    "quantity"
+                ],
+                "title": "LocationProductCreateRequest"
+            },
+            "LocationProductImportRequest": {
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "values"
+                ],
+                "title": "LocationProductImportRequest"
+            },
+            "MessageCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "email",
+                    "subject",
+                    "message"
+                ],
+                "title": "MessageCreateRequest"
+            },
+            "OrderUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "placed",
+                            "accepted",
+                            "processing",
+                            "ready_for_pickup",
+                            "dispatched",
+                            "completed",
+                            "delivered",
+                            "returned",
+                            "failed",
+                            "abandoned",
+                            "canceled"
+                        ]
+                    },
+                    "accepted_by": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "string"
+                    },
+                    "available_items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "title": "OrderUpdateRequest"
+            },
+            "OtpResetRequest": {
+                "type": "object",
+                "properties": {
+                    "order_no": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "order_no"
+                ],
+                "title": "OtpResetRequest"
+            },
+            "OtpVerificationRequest": {
+                "type": "object",
+                "properties": {
+                    "otp": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "otp"
+                ],
+                "title": "OtpVerificationRequest"
+            },
+            "PasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "required": [
+                    "email"
+                ],
+                "title": "PasswordRequest"
+            },
+            "PasswordResetRequest": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "code",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "title": "PasswordResetRequest"
+            },
+            "PasswordUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "current_password": {
+                        "type": "string"
+                    },
+                    "new_password": {
+                        "type": "string"
+                    },
+                    "new_password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "current_password",
+                    "new_password",
+                    "new_password_confirmation"
+                ],
+                "title": "PasswordUpdateRequest"
+            },
+            "ProductCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "sku"
+                ],
+                "title": "ProductCreateRequest"
+            },
+            "ProductUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    }
+                },
+                "title": "ProductUpdateRequest"
+            },
+            "RavenInviteCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "location_id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "location-admin",
+                            "raven"
+                        ]
+                    }
+                },
+                "required": [
+                    "location_id",
+                    "email",
+                    "role"
+                ],
+                "title": "RavenInviteCreateRequest"
+            },
+            "RavenInviteVerifyRequest": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "bvn": {
+                        "type": "string"
+                    },
+                    "settlement_bank": {
+                        "type": "string"
+                    },
+                    "settlement_account_number": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "token",
+                    "name",
+                    "password",
+                    "dob",
+                    "bvn"
+                ],
+                "title": "RavenInviteVerifyRequest"
+            },
+            "RavenStoreCheckRequest": {
+                "type": "object",
+                "properties": {
+                    "store_id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "store_id",
+                    "email"
+                ],
+                "title": "RavenStoreCheckRequest"
+            },
+            "RavenUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "settlement_bank": {
+                        "type": "string"
+                    },
+                    "settlement_account_number": {
+                        "type": "string"
+                    }
+                },
+                "title": "RavenUpdateRequest"
+            },
+            "ShoppingListRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "body": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "body"
+                ],
+                "title": "ShoppingListRequest"
+            },
+            "StoreCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "title": "StoreCreateRequest"
+            },
+            "StoreLoginRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "title": "StoreLoginRequest"
+            },
+            "StoreManagerCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "store_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "bvn": {
+                        "type": "string"
+                    },
+                    "settlement_bank": {
+                        "type": "string"
+                    },
+                    "settlement_account_number": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "store_id",
+                    "name",
+                    "email",
+                    "password",
+                    "dob",
+                    "bvn"
+                ],
+                "title": "StoreManagerCreateRequest"
+            },
+            "StoreUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "location": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "settlement_bank": {
+                        "type": "string"
+                    },
+                    "settlement_account_number": {
+                        "type": "string"
+                    },
+                    "subscription_plan": {
+                        "type": "string"
+                    },
+                    "store_photo_path": {
+                        "type": "string"
+                    }
+                },
+                "title": "StoreUpdateRequest"
+            }
         },
         "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
+            "ValidationException": {
+                "description": "Validation error",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Errors overview."
+                                },
+                                "errors": {
+                                    "type": "object",
+                                    "description": "A detailed description of each field that failed validation.",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "message",
+                                "errors"
+                            ]
+                        }
+                    }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "AuthorizationException": {
+                "description": "Authorization error",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
                 }
-              }
+            },
+            "AuthenticationException": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  }
 }
