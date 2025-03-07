@@ -27,10 +27,8 @@
   },
   "tabs": [
     {
-      "name": "API",
-      "url": "api",
-      "tab": "API",
-      "openapi": "https://staging-api.qjumpa.com/docs/api.json"
+      "name": "API Reference",
+      "url": "api-reference"
     }
   ],
   "anchors": [
@@ -83,7 +81,13 @@
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
       ]
-    }
+    },
+    "tabs": [
+      {
+        "tab": "API",
+        "openapi": "https://staging-api.qjumpa.com/docs/api.json"
+      }
+    ]
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
