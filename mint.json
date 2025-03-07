@@ -27,9 +27,9 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference",
-      "tab": "API Reference",
+      "name": "API",
+      "url": "api",
+      "tab": "API",
       "openapi": "https://staging-api.qjumpa.com/docs/api.json"
     }
   ],
